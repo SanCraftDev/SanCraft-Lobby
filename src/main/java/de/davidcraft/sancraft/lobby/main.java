@@ -3,6 +3,9 @@ package de.davidcraft.sancraft.lobby;
 import de.davidcraft.sancraft.lobby.listeners.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -46,6 +49,11 @@ public final class main extends JavaPlugin {
         listenerRegistration();
         loadConfig();
         readConfig.ReadConfig();
+
+        World world = Bukkit.getServer().getWorlds().get(0);
+        world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, false);
+        world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        world.setDifficulty(Difficulty.PEACEFUL);
     }
 
     @Override
