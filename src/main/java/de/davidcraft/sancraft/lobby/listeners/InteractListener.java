@@ -2,10 +2,7 @@ package de.davidcraft.sancraft.lobby.listeners;
 
 import de.davidcraft.sancraft.lobby.main;
 import de.davidcraft.sancraft.lobby.readConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,416 +16,55 @@ public class InteractListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) throws IOException {
-        Player player = event.getPlayer();
-        if (player.getGameMode().equals(GameMode.CREATIVE)) return;
-        if (main.cooldown.contains(player)) return;
-        main.cooldown.add(player);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.getInstance(), new Runnable() {
-            public void run() {
-                main.cooldown.remove(player);
-            }
-        }, readConfig.getLong("settings.cooldown"));
-        ItemStack playerItem = player.getInventory().getItemInMainHand();
-        if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-            String action = "left";
-            if (readConfig.getBoolean("navbar.one.enabled")) {
-                String slotword = "one";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
+            Player player = event.getPlayer();
+            if (player.getGameMode().equals(GameMode.CREATIVE)) return;
+            if (main.cooldown.contains(player)) return;
+            main.cooldown.add(player);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main.getInstance(), new Runnable() {
+                public void run() {
+                    main.cooldown.remove(player);
                 }
-            }
-            if (readConfig.getBoolean("navbar.two.enabled")) {
-                String slotword = "two";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
+            }, readConfig.getLong("settings.cooldown"));
+            Location psPosition = readConfig.getLocation("navbar.one", player);
+            Location spawnPosition = readConfig.getLocation("navbar.three", player);
+            Location testPosition = readConfig.getLocation("navbar.seven", player);
+            Location a24Position = readConfig.getLocation("navbar.nine", player);
+            if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.CRAFTING_TABLE)) {
+                    main.connect(player, "ps");
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BEDROCK)) {
+                    player.teleport(spawnPosition);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BLAZE_POWDER)) {
+                    player.performCommand("morph");
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.COMMAND_BLOCK)) {
+                    main.connect(player, "test");
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BOOKSHELF)) {
+                    main.connect(player, "a24");
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 }
-            }
-            if (readConfig.getBoolean("navbar.three.enabled")) {
-                String slotword = "three";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.four.enabled")) {
-                String slotword = "four";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.five.enabled")) {
-                String slotword = "five";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            } if (readConfig.getBoolean("navbar.six.enabled")) {
-                String slotword = "six";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.seven.enabled")) {
-                String slotword = "seven";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.eight.enabled")) {
-                String slotword = "eight";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.nine.enabled")) {
-                String slotword = "nine";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
+            } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.CRAFTING_TABLE)) {
+                    player.teleport(psPosition);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BEDROCK)) {
+                    player.teleport(spawnPosition);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BLAZE_POWDER)) {
+                    player.performCommand("morph");
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.COMMAND_BLOCK)) {
+                    player.teleport(testPosition);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BOOKSHELF)) {
+                    player.teleport(a24Position);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 }
             }
         }
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            String action = "right";
-            if (readConfig.getBoolean("navbar.one.enabled")) {
-                String slotword = "one";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.two.enabled")) {
-                String slotword = "two";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.three.enabled")) {
-                String slotword = "three";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.four.enabled")) {
-                String slotword = "four";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.five.enabled")) {
-                String slotword = "five";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.six.enabled")) {
-                String slotword = "six";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.seven.enabled")) {
-                String slotword = "seven";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.eight.enabled")) {
-                String slotword = "eight";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-            if (readConfig.getBoolean("navbar.nine.enabled")) {
-                String slotword = "nine";
-                if (readConfig.getString("navbar." + slotword + ".type").equals(playerItem.getType()) && readConfig.getString("navbar." + slotword + ".name").equalsIgnoreCase(playerItem.getItemMeta().getDisplayName())) {
-                    if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("server")) {
-                        player.sendMessage(readConfig.getString("settings.message.connect").replace("%server%", readConfig.getString("navbar." + slotword + ".server")));
-                        Sound sound1 = readConfig.getSound("settings.sounds.connect1");
-                        Sound sound2 = readConfig.getSound("settings.sounds.connect2");
-                        player.playSound(player.getLocation(), sound1, 1, 1);
-                        player.playSound(player.getLocation(), sound2, 1, 1);
-                        main.connect(player, readConfig.getString("navbar." + slotword + ".server"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("teleport")) {
-                        Location location = readConfig.getLocation("navbar." + slotword, player);
-                        Sound sound = readConfig.getSound("settings.sounds.teleport");
-                        player.playSound(player.getLocation(), sound, 1, 1);
-                        player.teleport(location);
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmdconsole")) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), readConfig.getString("navbar." + slotword + ".cmd"));
-                    } else if (readConfig.getString("navbar." + slotword + "." + action).equalsIgnoreCase("cmd")) {
-                        player.performCommand("navbar." + slotword + ".cmd");
-                    }
-                }
-            }
-        }
-    }
+
 }
