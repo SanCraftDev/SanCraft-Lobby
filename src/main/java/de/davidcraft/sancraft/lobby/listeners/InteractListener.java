@@ -29,8 +29,8 @@ public class InteractListener implements Listener {
             Location spawnPosition = readConfig.getLocation("navbar.three", player);
             Location testPosition = readConfig.getLocation("navbar.seven", player);
             Location a24Position = readConfig.getLocation("navbar.nine", player);
-            if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-                if (player.getInventory().getItemInMainHand().getType().equals(Material.CRAFTING_TABLE)) {
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.GRASS_BLOCK)) {
                     main.connect(player, "ps");
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
@@ -50,8 +50,8 @@ public class InteractListener implements Listener {
                 } else if (player.getInventory().getItemInMainHand().getType().equals(Material.FEATHER)) {
                     player.performCommand("fly");
                 }
-            } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-                if (player.getInventory().getItemInMainHand().getType().equals(Material.CRAFTING_TABLE)) {
+            } else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                if (player.getInventory().getItemInMainHand().getType().equals(Material.GRASS_BLOCK)) {
                     player.teleport(psPosition);
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BEDROCK)) {
