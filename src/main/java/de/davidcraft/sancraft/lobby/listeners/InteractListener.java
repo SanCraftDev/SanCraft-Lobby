@@ -35,8 +35,9 @@ public class InteractListener implements Listener {
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BEDROCK)) {
-                    player.teleport(spawnPosition);
-                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                    main.connect(player, "one");
+                    player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BLAZE_POWDER)) {
                     player.performCommand("morph");
                 } else if (player.getInventory().getItemInMainHand().getType().equals(Material.COMMAND_BLOCK)) {
