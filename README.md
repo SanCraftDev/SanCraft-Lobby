@@ -1,2 +1,2 @@
 # SanCraft-Lobby
-Lobby Plugin des SanCraft Netzwerks!
+The lobby plugin of the SanCraft Network!
