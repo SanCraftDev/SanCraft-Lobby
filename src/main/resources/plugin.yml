@@ -1,6 +1,6 @@
 name: SanCraft-Lobby
 version: ${project.version}
-main: dev.sancraft
+main: dev.sancraft.lobby.main
 api-version: 1.17
 authors: [ DavidCraft ]
 description: Ein Plugin für die Lobby vom SanCraft Netzwerk
