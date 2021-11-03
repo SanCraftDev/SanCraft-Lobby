@@ -1,6 +1,6 @@
-package de.davidcraft.sancraft.lobby;
+package dev.sancraft.lobby;
 
-import de.davidcraft.sancraft.lobby.listeners.*;
+import dev.sancraft.lobby.listeners.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;

@@ -1,6 +1,6 @@
-package de.davidcraft.sancraft.lobby.listeners;
+package dev.sancraft.lobby.listeners;
 
-import de.davidcraft.sancraft.lobby.readConfig;
+import dev.sancraft.lobby.readConfig;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

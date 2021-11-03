@@ -1,4 +1,4 @@
-package de.davidcraft.sancraft.lobby;
+package dev.sancraft.lobby;
 
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;

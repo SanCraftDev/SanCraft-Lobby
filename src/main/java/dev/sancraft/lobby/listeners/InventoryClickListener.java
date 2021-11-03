@@ -1,16 +1,16 @@
-package de.davidcraft.sancraft.lobby.listeners;
+package dev.sancraft.lobby.listeners;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class DropListener implements Listener {
+public class InventoryClickListener implements Listener {
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent event) {
-        Player player = event.getPlayer();
+    public void onInventoryClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
         if (!player.getGameMode().equals(GameMode.CREATIVE)) {
             event.setCancelled(true);
         }

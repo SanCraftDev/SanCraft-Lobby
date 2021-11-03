@@ -1,14 +1,13 @@
-package de.davidcraft.sancraft.lobby.listeners;
+package dev.sancraft.lobby.listeners;
 
-import de.davidcraft.sancraft.lobby.main;
-import de.davidcraft.sancraft.lobby.readConfig;
+import dev.sancraft.lobby.main;
+import dev.sancraft.lobby.readConfig;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 
