@@ -21,7 +21,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if(main.cooldown.contains(player)) main.cooldown.remove(player);
+        if (main.cooldown.contains(player)) main.cooldown.remove(player);
         Location spawn = readConfig.getLocation("settings.spawn", player);
         player.teleport(spawn);
         player.setGameMode(GameMode.ADVENTURE);

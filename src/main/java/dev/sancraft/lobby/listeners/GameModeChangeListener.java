@@ -21,7 +21,7 @@ public class GameModeChangeListener implements Listener {
         String serverip = readConfig.getString("settings.serverip");
         Inventory inv = player.getInventory();
         inv.clear();
-        if(!event.getNewGameMode().equals(GameMode.ADVENTURE)) return;
+        if (!event.getNewGameMode().equals(GameMode.ADVENTURE)) return;
         ItemStack offline = readConfig.getItemStack("navbar.offline");
         if (readConfig.getBoolean("navbar.one.enabled")) {
             Integer slot = 0;
