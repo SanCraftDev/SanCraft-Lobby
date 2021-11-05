@@ -2,6 +2,7 @@ package dev.sancraft.lobby.listeners;
 
 import dev.sancraft.lobby.config;
 import dev.sancraft.lobby.main;
+import dev.sancraft.lobby.navbar;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 
 import java.io.IOException;
 
@@ -315,6 +317,9 @@ public class InteractListener implements Listener {
                         player.teleport(teleport);
                     }
                 }
+            Inventory inv = player.getInventory();
+            inv.clear();
+            navbar.generateNavbar(inv);
         }
     }
 }
