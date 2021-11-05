@@ -1,12 +1,14 @@
 package dev.sancraft.lobby;
 
+import ch.jalu.configme.SettingsManager;
+import ch.jalu.configme.SettingsManagerBuilder;
+import ch.jalu.configme.properties.Property;
 import dev.sancraft.lobby.listeners.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,9 +22,9 @@ import java.util.ArrayList;
 public final class main extends JavaPlugin {
 
     public static ArrayList<Player> cooldown = new ArrayList<Player>();
+    static SettingsManager settingsManager;
     private static String prefix = ChatColor.GRAY + "[" + ChatColor.GOLD + "Lobby" + ChatColor.GRAY + "]";
     private static main instance;
-    private static FileConfiguration config;
 
     public static String getPrefix() {
         return prefix + " ";
@@ -40,15 +42,17 @@ public final class main extends JavaPlugin {
         player.sendPluginMessage(getInstance(), "BungeeCord", b.toByteArray());
     }
 
+    public static Object getValue(Property property) {
+        return settingsManager.getProperty(property);
+    }
+
     @Override
     public void onEnable() {
-        config = getConfig();
-        Bukkit.getConsoleSender().sendMessage(main.getPrefix() + ChatColor.GREEN + "Das Plugin wurde erfolgreich gestartet!");
-        instance = this;
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        listenerRegistration();
-        loadConfig();
-        readConfig.ReadConfig();
+        settingsManager = SettingsManagerBuilder
+                .withYamlFile(new File("plugins/SanCraft-Lobby/config.yml"))
+                .configurationData(config.class)
+                .useDefaultMigrationService()
+                .create();
 
         World world = Bukkit.getServer().getWorlds().get(0);
         world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, false);
@@ -70,18 +74,4 @@ public final class main extends JavaPlugin {
         pluginManager.registerEvents(new GameModeChangeListener(), this);
         pluginManager.registerEvents(new DamageListener(), this);
     }
-
-    private void loadConfig() {
-        if ((new File("plugins/SanCraft-Lobby/config.yml")).exists()) {
-            config = this.getConfig();
-            config.options().copyDefaults(true);
-            Bukkit.getConsoleSender().sendMessage(main.getPrefix() + ChatColor.GREEN + "Config Datei erstellt und geladen!");
-        } else {
-            saveDefaultConfig();
-            config = this.getConfig();
-            config.options().copyDefaults(true);
-            Bukkit.getConsoleSender().sendMessage(main.getPrefix() + ChatColor.GREEN + "Config Datei geladen!");
-        }
-    }
-
 }

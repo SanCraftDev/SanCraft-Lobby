@@ -1,4 +1,4 @@
-package dev.sancraft.lobby.config;
+package dev.sancraft.lobby;
 
 import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.properties.BooleanProperty;
@@ -7,6 +7,8 @@ import ch.jalu.configme.properties.Property;
 import ch.jalu.configme.properties.StringProperty;
 
 public class config implements SettingsHolder {
+    //Navbar
+    //Slot One
     public static final Property<Boolean> NAVBAR_ONE_ENABLED =
             new BooleanProperty("navbar.one.enabled", false);
     public static final Property<String> NAVBAR_ONE_TYPE =
@@ -31,11 +33,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.one.server", "");
     public static final Property<Integer> NAVBAR_ONE_PORT =
             new IntegerProperty("navbar.one.port", 0);
+    public static final Property<String> NAVBAR_ONE_MESSAGE =
+            new StringProperty("navbar.one.message", "");
     public static final Property<String> NAVBAR_ONE_RIGHT_CLICK =
             new StringProperty("navbar.one.right-click", "");
     public static final Property<String> NAVBAR_ONE_LEFT_CLICK =
             new StringProperty("navbar.one.left-click", "");
-
+    //Slot Two
     public static final Property<Boolean> NAVBAR_TWO_ENABLED =
             new BooleanProperty("navbar.two.enabled", false);
     public static final Property<String> NAVBAR_TWO_TYPE =
@@ -60,11 +64,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.two.server", "");
     public static final Property<Integer> NAVBAR_TWO_PORT =
             new IntegerProperty("navbar.two.port", 0);
+    public static final Property<String> NAVBAR_TWO_MESSAGE =
+            new StringProperty("navbar.two.message", "");
     public static final Property<String> NAVBAR_TWO_RIGHT_CLICK =
             new StringProperty("navbar.two.right-click", "");
     public static final Property<String> NAVBAR_TWO_LEFT_CLICK =
             new StringProperty("navbar.two.left-click", "");
-
+    //Slot Three
     public static final Property<Boolean> NAVBAR_THREE_ENABLED =
             new BooleanProperty("navbar.three.enabled", false);
     public static final Property<String> NAVBAR_THREE_TYPE =
@@ -89,11 +95,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.three.server", "");
     public static final Property<Integer> NAVBAR_THREE_PORT =
             new IntegerProperty("navbar.three.port", 0);
+    public static final Property<String> NAVBAR_THREE_MESSAGE =
+            new StringProperty("navbar.three.message", "");
     public static final Property<String> NAVBAR_THREE_RIGHT_CLICK =
             new StringProperty("navbar.three.right-click", "");
     public static final Property<String> NAVBAR_THREE_LEFT_CLICK =
             new StringProperty("navbar.three.left-click", "");
-
+    //Slot Four
     public static final Property<Boolean> NAVBAR_FOUR_ENABLED =
             new BooleanProperty("navbar.four.enabled", false);
     public static final Property<String> NAVBAR_FOUR_TYPE =
@@ -118,11 +126,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.four.server", "");
     public static final Property<Integer> NAVBAR_FOUR_PORT =
             new IntegerProperty("navbar.four.port", 0);
+    public static final Property<String> NAVBAR_FOUR_MESSAGE =
+            new StringProperty("navbar.four.message", "");
     public static final Property<String> NAVBAR_FOUR_RIGHT_CLICK =
             new StringProperty("navbar.four.right-click", "");
     public static final Property<String> NAVBAR_FOUR_LEFT_CLICK =
             new StringProperty("navbar.four.left-click", "");
-
+    //Slot Five
     public static final Property<Boolean> NAVBAR_FIVE_ENABLED =
             new BooleanProperty("navbar.five.enabled", false);
     public static final Property<String> NAVBAR_FIVE_TYPE =
@@ -147,11 +157,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.five.server", "");
     public static final Property<Integer> NAVBAR_FIVE_PORT =
             new IntegerProperty("navbar.five.port", 0);
+    public static final Property<String> NAVBAR_FIVE_MESSAGE =
+            new StringProperty("navbar.five.message", "");
     public static final Property<String> NAVBAR_FIVE_RIGHT_CLICK =
             new StringProperty("navbar.five.right-click", "");
     public static final Property<String> NAVBAR_FIVE_LEFT_CLICK =
             new StringProperty("navbar.five.left-click", "");
-
+    //Slot Six
     public static final Property<Boolean> NAVBAR_SIX_ENABLED =
             new BooleanProperty("navbar.six.enabled", false);
     public static final Property<String> NAVBAR_SIX_TYPE =
@@ -176,11 +188,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.six.server", "");
     public static final Property<Integer> NAVBAR_SIX_PORT =
             new IntegerProperty("navbar.six.port", 0);
+    public static final Property<String> NAVBAR_SIX_MESSAGE =
+            new StringProperty("navbar.six.message", "");
     public static final Property<String> NAVBAR_SIX_RIGHT_CLICK =
             new StringProperty("navbar.six.right-click", "");
     public static final Property<String> NAVBAR_SIX_LEFT_CLICK =
             new StringProperty("navbar.six.left-click", "");
-
+    //Slot Seven
     public static final Property<Boolean> NAVBAR_SEVEN_ENABLED =
             new BooleanProperty("navbar.seven.enabled", false);
     public static final Property<String> NAVBAR_SEVEN_TYPE =
@@ -205,11 +219,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.seven.server", "");
     public static final Property<Integer> NAVBAR_SEVEN_PORT =
             new IntegerProperty("navbar.seven.port", 0);
+    public static final Property<String> NAVBAR_SEVEN_MESSAGE =
+            new StringProperty("navbar.seven.message", "");
     public static final Property<String> NAVBAR_SEVEN_RIGHT_CLICK =
             new StringProperty("navbar.seven.right-click", "");
     public static final Property<String> NAVBAR_SEVEN_LEFT_CLICK =
             new StringProperty("navbar.seven.left-click", "");
-
+    //Slot Eight
     public static final Property<Boolean> NAVBAR_EIGHT_ENABLED =
             new BooleanProperty("navbar.eight.enabled", false);
     public static final Property<String> NAVBAR_EIGHT_TYPE =
@@ -234,11 +250,13 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.eight.server", "");
     public static final Property<Integer> NAVBAR_EIGHT_PORT =
             new IntegerProperty("navbar.eight.port", 0);
+    public static final Property<String> NAVBAR_EIGHT_MESSAGE =
+            new StringProperty("navbar.eight.message", "");
     public static final Property<String> NAVBAR_EIGHT_RIGHT_CLICK =
             new StringProperty("navbar.eight.right-click", "");
     public static final Property<String> NAVBAR_EIGHT_LEFT_CLICK =
             new StringProperty("navbar.eight.left-click", "");
-
+    //Slot Nine
     public static final Property<Boolean> NAVBAR_NINE_ENABLED =
             new BooleanProperty("navbar.nine.enabled", false);
     public static final Property<String> NAVBAR_NINE_TYPE =
@@ -263,10 +281,53 @@ public class config implements SettingsHolder {
             new StringProperty("navbar.nine.server", "");
     public static final Property<Integer> NAVBAR_NINE_PORT =
             new IntegerProperty("navbar.nine.port", 0);
+    public static final Property<String> NAVBAR_NINE_MESSAGE =
+            new StringProperty("navbar.nine.message", "");
     public static final Property<String> NAVBAR_NINE_RIGHT_CLICK =
             new StringProperty("navbar.nine.right-click", "");
     public static final Property<String> NAVBAR_NINE_LEFT_CLICK =
             new StringProperty("navbar.nine.left-click", "");
+    //Offline-Item
+    public static final Property<String> NAVBAR_OFFLINE_ITEM_TYPE =
+            new StringProperty("navbar.offline-item.type", "BARRIER");
+    public static final Property<String> NAVBAR_OFFLINE_ITEM_NAME =
+            new StringProperty("navbar.offline-item.name", "§4Offline");
+    public static final Property<String> NAVBAR_OFFLINE_ITEM_SKULL =
+            new StringProperty("navbar.offline-item.skull", "");
+
+    //Settings
+    //General
+    public static final Property<String> SETTINGS_IP =
+            new StringProperty("settings.ip", "localhost");
+    public static final Property<Integer> SETTINGS_COOLDOWN =
+            new IntegerProperty("settings.cooldown", 50);
+    //Effect
+    public static final Property<String> SETTINGS_EFFECT_TYPE =
+            new StringProperty("settings.effect.type", "NIGHT_VISION");
+    public static final Property<Integer> SETTINGS_EFFECT_DURATION =
+            new IntegerProperty("settings.effect.duration", 99999);
+    public static final Property<Integer> SETTINGS_EFFECT_AMPLIFIER =
+            new IntegerProperty("settings.effect.amplifier", 255);
+    public static final Property<Boolean> SETTINGS_EFFECT_PARTICLES =
+            new BooleanProperty("settings.effect.particles", false);
+    //Sounds
+    public static final Property<String> SETTINGS_SOUNDS_TELEPORT =
+            new StringProperty("settings.sounds.teleport", "ENTITY_ENDERMEN_TELEPORT");
+    public static final Property<String> SETTINGS_SOUNDS_CONNECT1 =
+            new StringProperty("settings.sounds.connect1", "ENTITY_EXPERIENCE_ORB_PICKUP");
+    public static final Property<String> SETTINGS_SOUNDS_CONNECT2 =
+            new StringProperty("settings.sounds.connect2", "ENTITY_PLAYER_LEVELUP");
+    //Spawn
+    public static final Property<Integer> SETTINGS_SPAWN_X =
+            new IntegerProperty("settings.spawn.x", 0);
+    public static final Property<Integer> SETTINGS_SPAWN_Y =
+            new IntegerProperty("settings.spawn.y", 0);
+    public static final Property<Integer> SETTINGS_SPAWN_Z =
+            new IntegerProperty("settings.spawn.z", 0);
+    public static final Property<Integer> SETTINGS_SPAWN_PITCH =
+            new IntegerProperty("settings.spawn.pitch", 0);
+    public static final Property<Integer> SETTINGS_SPAWN_YAW =
+            new IntegerProperty("settings.spawn.yaw", 0);
 
     //Docs: https://github.com/AuthMe/ConfigMe/wiki/Technical-overview
     //Example: https://github.com/AuthMe/ConfigMe/tree/master/src/test/java/ch/jalu/configme/demo
