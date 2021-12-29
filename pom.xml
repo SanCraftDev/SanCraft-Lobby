@@ -52,7 +52,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>sancraft-lobby</finalName>
+        <finalName>sancraft-lobby-dev</finalName>
     </build>
 
     <repositories>
