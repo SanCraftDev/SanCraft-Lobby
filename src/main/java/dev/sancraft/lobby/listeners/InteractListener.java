@@ -34,7 +34,7 @@ public class InteractListener implements Listener {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BEDROCK)) {
-                main.connect(player, "one");
+                main.connect(player, "ob");
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             } else if (player.getInventory().getItemInMainHand().getType().equals(Material.BLAZE_POWDER)) {
