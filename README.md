@@ -1,5 +1,5 @@
 # SanCraft-Lobby
 
-**The End! The Plugin is no longer supported!**
+**The End! The Plugin is no longer supported and is not finished!**
 
-The plugin of the SanCraft Network.
+The lobby plugin of the SanCraft Network.
