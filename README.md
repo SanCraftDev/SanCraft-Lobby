@@ -1,3 +1,5 @@
 # SanCraft-Lobby
 
-The lobby plugin of the SanCraft Network!
+**The End! The Plugin is no longer supported!**
+
+The plugin of the SanCraft Network.
